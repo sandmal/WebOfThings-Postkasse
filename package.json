@@ -1,0 +1,23 @@
+{
+  "name": "webofthings-postkasse",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sandmal/WebOfThings-Postkasse.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sandmal/WebOfThings-Postkasse/issues"
+  },
+  "homepage": "https://github.com/sandmal/WebOfThings-Postkasse#readme",
+  "dependencies": {
+    "mqtt": "^4.2.8"
+  }
+}
