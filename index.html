@@ -13,28 +13,61 @@
   </head>
   <body>
     <div class="wrapper">
-      <h1>mqtt-demo</h1>
+      <h1>Mqqt-demo</h1>
       <h2>
-        A simple web application that can subscribe to topics from an MQTT
-        broker over websockets
+        A simple web application that emulates ownership and guest access to
+        smart mailbox.
       </h2>
-      <div id="messages"></div>
     </div>
-    <form id="connection-info-form">
-      <b>Hostname or IP Address:</b>
+    <div id="global-messages"></div>
+    <div class="connection-broker-info">
+      <h3>General Connection information</h3>
+      <form id="connection-broker-info-form">
+        <p>MQTT broker connection information</p>
+        <strong>Hostname:</strong>
+        <input
+          id="host"
+          type="text"
+          name="host"
+          value="broker.mqttdashboard.com"
+        /><br />
+        <strong>Port:</strong>
+        <input id="port" type="text" name="port" value="8000" /><br />
+      </form>
+
+    </div>
+    <div id="subscribe-owner">
+      <h3>Owner</h3>
+      <strong>Topic:</strong>
       <input
-        id="host"
+        id="ownerTopic"
         type="text"
-        name="host"
-        value="test.mosquitto.org"
-      /><br />
-      <b>Port:</b>
-      <input id="port" type="text" name="port" value="8080" /><br />
-      <b>Topic:</b>
-      <input id="topic" type="text" name="topic" value="#" /><br /><br />
-      <input type="button" onclick="startConnect()" value="Connect" />
-      <input type="button" onclick="startDisconnect()" value="Disconnect" />
-    </form>
-    <div id="messages"></div>
+        name="Owner topic"
+        value="SmartMailBoxNTNU/wot"
+      />
+      <input
+        type="button"
+        onclick="startOwnerSubcription()"
+        value="Subscribe"
+      />
+      <input
+        type="button"
+        onclick="startOwnerUnsubscribe()"
+        value="Unsubscribe"
+      />
+      <input
+        type="button"
+        onclick="createGuest()"
+        value="Add guest"
+      />
+      <div id="owner-messages"></div>
+    </div>
+    <div id="createGuest"></div>
+    <br/>
+    <br/>
+    <div>
+      <h3>Global messages</h3>
+      <div id="messages"></div>
+    <div>
   </body>
 </html>
