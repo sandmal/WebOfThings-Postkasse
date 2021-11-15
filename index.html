@@ -34,7 +34,6 @@
         <strong>Port:</strong>
         <input id="port" type="text" name="port" value="8000" /><br />
       </form>
-
     </div>
     <div id="subscribe-owner">
       <h3>Owner</h3>
@@ -55,19 +54,28 @@
         onclick="startOwnerUnsubscribe()"
         value="Unsubscribe"
       />
+      <input type="button" onclick="createGuest()" value="Add guest" />
+      <br />
+      <br />
+      <strong>Message:</strong>
       <input
-        type="button"
-        onclick="createGuest()"
-        value="Add guest"
+        id="ownerMessage"
+        type="text"
+        name="Owner topic"
+        placeholder="Text here..."
+        value=""
       />
+      <input type="button" onclick="publishMessage()" value="Send" />
+      <br />
+      <br />
       <div id="owner-messages"></div>
     </div>
     <div id="createGuest"></div>
-    <br/>
-    <br/>
+    <br />
+    <br />
     <div>
       <h3>Global messages</h3>
       <div id="messages"></div>
-    <div>
+    </div>
   </body>
 </html>

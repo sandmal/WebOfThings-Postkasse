@@ -41,18 +41,11 @@ function onOwnerConnect() {
   let topic = document.getElementById('ownerTopic').value;
   let messageID = 'owner-messages';
 
-  let message = `${client.clientId}-messages`;
-
-  //console.log(client);
-  //console.log(message);
-
   // Print output for the user in the messages div
   document.getElementById(
     messageID
   ).innerHTML += `<span>Subscribing to: ${topic} </span><br/>`;
 
-  //console.log(topic);
-  // Subscribe to the requested topic
   client.subscribe(topic);
 }
 
@@ -73,21 +66,25 @@ function onConnectionLost(responseObject) {
 
 // called when a message arrives
 function onMessageArrived(message) {
-  //console.log('onMessageArrived:' + message.payloadString);
-  //console.log(client)
-  document.getElementById(
-    'owner-messages'
-  ).innerHTML += `<span>Topic: ${message.destinationName} | ${message.payloadString} </span><br/>`;
+  if (message.destinationName === 'SmartMailBoxNTNU/wot') {
+    document.getElementById(
+      'owner-messages'
+    ).innerHTML += `<span>Topic: ${message.destinationName} | Message: ${message.payloadString} </span><br/>`;
+    document.querySelectorAll('.guest-messages').forEach((name) => {
+      if (name.value === undefined) {
+        name.innerHTML += `<span>Owner mailbox:${message.payloadString} </span><br/>`;
+        console.log(client.clientId);
+      }
+    });
+  }
 }
 
 // called when a message arrives
 function onGuestMessageArrived(message) {
   //console.log('onMessageArrived:' + message.payloadString);
   //console.log(client);
-
   // add so all the participants gets notified
 }
-
 
 // -------------------------------------------------------------------------
 
@@ -107,9 +104,11 @@ function startGuestSubcription() {
   client = new Paho.MQTT.Client(host, Number(port), clientID);
   let messageID = `${client.clientId}-messages`;
 
-  document.getElementById(
-    `subscribe-guest-${count}`
-  ).innerHTML += `<div id="${messageID}"></div>`;
+  document
+    .getElementById(`subscribe-guest-${count}`)
+    .querySelector(
+      '.guest-messages'
+    ).innerHTML += `<span id="${messageID}">Subscribing to: ${messageID}</span></br>`;
 
   // Set callback handlers
   client.onConnectionLost = onConnectionLost;
@@ -127,18 +126,11 @@ function onGuestConnect() {
   // Fetch the MQTT topic from the form
   console.log('Connecting to');
   let topic = document.getElementById('guestTopic').value;
-  let messageID = `${client.clientId}-messages`;
-
-  // Print output for the user in the messages div
-  document.getElementById(
-    messageID
-  ).innerHTML += `<span>Subscribing to: ${messageID} </span><br/>`;
 
   document.getElementById(
     'owner-messages'
   ).innerHTML += `<span>Guest subscribed to your mailbox </span><br/>`;
 
-  //console.log(topic);
   // Subscribe to the requested topic
   client.subscribe(topic);
 }
@@ -176,7 +168,17 @@ function createGuest() {
         onclick="startGuestUnsubscribe()"
         value="Unsubscribe"
       />
+      <div class="guest-messages"></div>
     </div>
     `;
 }
 
+function publishMessage() {
+  let topic = document.getElementById('ownerTopic').value;
+  let messageToSend = document.getElementById('ownerMessage').value;
+  let message = new Paho.MQTT.Message(messageToSend);
+  message.destinationName = topic;
+  if (messageToSend !== '') {
+    client.send(message);
+  }
+}
