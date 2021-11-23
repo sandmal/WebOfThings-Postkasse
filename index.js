@@ -12,8 +12,8 @@ client.on('connect', () => {
 
 client.on('message', function (topic, message) {
   // message is Buffer
- //console.log(topic + ': ' + message.toString());
-  if(message.toString() == 'Mail received'){
+  //console.log(topic + ': ' + message.toString());
+  if (message.toString() == 'Mail received') {
     console.log('Mail received');
   }
 
@@ -21,11 +21,9 @@ client.on('message', function (topic, message) {
     console.log('Mailbox is full');
   }
 
-  if(message.toString() == 'newTopic') {
+  if (message.toString() == 'newTopic') {
     client.subscribe([topic], () => {
       console.log(`New subscriber to '${topic}'`);
-    })
+    });
   }
 });
-
-

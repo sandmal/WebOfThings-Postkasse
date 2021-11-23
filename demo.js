@@ -28,7 +28,6 @@ function startOwnerSubcription() {
   client.onMessageArrived = onMessageArrived;
 
   // Connect the client, if successful, call onConnect function
-
   client.connect({
     onSuccess: onOwnerConnect,
   });
@@ -81,9 +80,7 @@ function onMessageArrived(message) {
 
 // called when a message arrives
 function onGuestMessageArrived(message) {
-  //console.log('onMessageArrived:' + message.payloadString);
-  //console.log(client);
-  // add so all the participants gets notified
+  //TODO: Do not remove this, i dont know why it works.. but i does.
 }
 
 // -------------------------------------------------------------------------
@@ -149,7 +146,6 @@ function startGuestUnsubscribe() {
 function createGuest() {
   document.getElementById('createGuest').innerHTML += `
   <div id="subscribe-guest-${count}">
-
       <h3>Guest</h3>
       <strong>Topic:</strong>
       <input
